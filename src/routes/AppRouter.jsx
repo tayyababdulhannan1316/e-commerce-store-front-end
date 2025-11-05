@@ -16,7 +16,7 @@ import Checkout from "../pages/Frontend/Checkout";
 import OrderSuccess from "../pages/Frontend/OrderSuccess";
 import OrderHistory from "../pages/Frontend/OrderHistory";
 import MyAccount from "../pages/Frontend/MyAccount";
-
+import Auth from "../pages/Auth/index.jsx";
 
 export default function AppRouter() {
   return (
@@ -35,6 +35,7 @@ export default function AppRouter() {
           <Route path="/ordersuccess" element={<OrderSuccess />} />
           <Route path="/orderhistory" element={<OrderHistory />} />
           <Route path="/myaccount" element={<MyAccount />} />
+          <Route path="/*auth" element={<Auth />} />
         </Routes>
       </main>
       <Footer />
