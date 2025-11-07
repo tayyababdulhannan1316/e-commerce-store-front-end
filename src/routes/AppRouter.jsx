@@ -35,7 +35,7 @@ export default function AppRouter() {
           <Route path="/ordersuccess" element={<OrderSuccess />} />
           <Route path="/orderhistory" element={<OrderHistory />} />
           <Route path="/myaccount" element={<MyAccount />} />
-          <Route path="/*auth" element={<Auth />} />
+          <Route path="/auth/*" element={<Auth />} />
         </Routes>
       </main>
       <Footer />
