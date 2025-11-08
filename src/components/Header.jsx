@@ -23,24 +23,38 @@ export default function Header() {
           {/* Logo */}
           <Link
             to="/"
-            className="text-2xl font-bold text-white hover:underline tracking-tight"
+            className="text-2xl font-bold text-white hover tracking-tight"
           >
             ShopEase
           </Link>
 
           {/* Desktop Menu */}
           <nav className="hidden md:flex items-center space-x-8 text-white font-medium">
-            <Link to="/" className="hover:text-blue-600">Home</Link>
-            <Link to="/shop" className="hover:text-blue-600">Shop</Link>
-            <Link to="/categories" className="hover:text-blue-600">Categories</Link>
-            <Link to="/order-history" className="hover:text-blue-600">Orders</Link>
-            <Link to="/about" className="hover:text-blue-600">About</Link>
-            <Link to="/contact" className="hover:text-blue-600">Contact</Link>
+            <Link to="/" className="hover:text-blue-600">
+              Home
+            </Link>
+            <Link to="/shop" className="hover:text-blue-600">
+              Shop
+            </Link>
+            <Link to="/categories" className="hover:text-blue-600">
+              Categories
+            </Link>
+            <Link to="/orderhistory" className="hover:text-blue-600">
+              Orders
+            </Link>
+            <Link to="/about" className="hover:text-blue-600">
+              About
+            </Link>
+            <Link to="/contact" className="hover:text-blue-600">
+              Contact
+            </Link>
 
             {/* ✅ Auth Buttons */}
             {user ? (
               <>
-                <Link to="/myaccount" className="hover:text-blue-600">Dashboard</Link>
+                <Link to="/dashboard" className="hover:text-blue-600">
+                  Dashboard
+                </Link>
                 <button
                   onClick={handleLogout}
                   className="bg-red-600 px-3 py-1.5 rounded-lg hover:bg-red-700 text-white transition"
@@ -50,8 +64,12 @@ export default function Header() {
               </>
             ) : (
               <>
-                <Link to="/auth/login" className="hover:text-blue-600">Login</Link>
-                <Link to="/auth/register" className="hover:text-blue-600">Register</Link>
+                <Link to="/auth/login" className="hover:text-blue-600">
+                  Login
+                </Link>
+                <Link to="/auth/register" className="hover:text-blue-600">
+                  Register
+                </Link>
               </>
             )}
           </nav>
@@ -69,11 +87,11 @@ export default function Header() {
           </button>
         </div>
 
-        {/* ✅ Second Row: Search + Cart */}
-        <div className="flex justify-between items-center mt-3">
+        {/* ✅ Second Row: Search + Cart + Account (closer together) */}
+        <div className="flex justify-stretch items-center mt-5 flex-wrap gap-3">
           {/* Search Bar */}
           <div className="flex items-center bg-gray-100 rounded-full px-3 py-1 w-full md:w-2/3">
-            <Search className="text-gray-500" size={18} />
+            <Search className="text-gray-500" size={30} />
             <input
               type="text"
               placeholder="Search for products..."
@@ -81,10 +99,13 @@ export default function Header() {
             />
           </div>
 
-          {/* Cart + User Icon */}
-          <div className="flex items-center space-x-5 ml-4">
+          {/* Cart + User Icon (closer to search bar) */}
+          <div className="flex items-center space-x-5 md:ml-2">
             <Link to="/cart" className="relative">
-              <ShoppingCart className="text-gray-300 hover:text-blue-500" size={22} />
+              <ShoppingCart
+                className="text-gray-300 hover:text-blue-500"
+                size={22}
+              />
               {totalItems > 0 && (
                 <span className="absolute -top-2 -right-2 bg-blue-600 text-white text-xs rounded-full px-1.5">
                   {totalItems}
@@ -92,7 +113,9 @@ export default function Header() {
               )}
             </Link>
 
-            <User className="text-gray-300 hover:text-blue-500 cursor-pointer" />
+            <Link to={user ? "/myaccount" : "/auth/login"}>
+              <User className="text-gray-300 hover:text-blue-500 cursor-pointer" />
+            </Link>
           </div>
         </div>
       </div>
@@ -111,17 +134,33 @@ export default function Header() {
             </div>
 
             <nav className="flex flex-col space-y-2 text-gray-700 font-medium">
-              <Link to="/" className="hover:text-blue-600">Home</Link>
-              <Link to="/shop" className="hover:text-blue-600">Shop</Link>
-              <Link to="/categories" className="hover:text-blue-600">Categories</Link>
-              <Link to="/order-history" className="hover:text-blue-600">Orders</Link>
-              <Link to="/about" className="hover:text-blue-600">About</Link>
-              <Link to="/contact" className="hover:text-blue-600">Contact</Link>
-              <Link to="/cart" className="hover:text-blue-600">Cart</Link>
+              <Link to="/" className="hover:text-blue-600">
+                Home
+              </Link>
+              <Link to="/shop" className="hover:text-blue-600">
+                Shop
+              </Link>
+              <Link to="/categories" className="hover:text-blue-600">
+                Categories
+              </Link>
+              <Link to="/orderhistory" className="hover:text-blue-600">
+                Orders
+              </Link>
+              <Link to="/about" className="hover:text-blue-600">
+                About
+              </Link>
+              <Link to="/contact" className="hover:text-blue-600">
+                Contact
+              </Link>
+              <Link to="/cart" className="hover:text-blue-600">
+                Cart
+              </Link>
 
               {user ? (
                 <>
-                  <Link to="/myaccount" className="hover:text-blue-600">Dashboard</Link>
+                  <Link to="/dashboard" className="hover:text-blue-600">
+                    Dashboard
+                  </Link>
                   <button
                     onClick={handleLogout}
                     className="bg-red-600 text-white px-4 py-2 rounded-lg mt-2 hover:bg-red-700"
@@ -131,8 +170,12 @@ export default function Header() {
                 </>
               ) : (
                 <>
-                  <Link to="/auth/login" className="hover:text-blue-600">Login</Link>
-                  <Link to="/auth/register" className="hover:text-blue-600">Register</Link>
+                  <Link to="/auth/login" className="hover:text-blue-600">
+                    Login
+                  </Link>
+                  <Link to="/auth/register" className="hover:text-blue-600">
+                    Register
+                  </Link>
                 </>
               )}
             </nav>
@@ -142,24 +185,3 @@ export default function Header() {
     </header>
   );
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

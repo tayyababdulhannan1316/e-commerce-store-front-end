@@ -17,6 +17,9 @@ import OrderSuccess from "../pages/Frontend/OrderSuccess";
 import OrderHistory from "../pages/Frontend/OrderHistory";
 import MyAccount from "../pages/Frontend/MyAccount";
 import Auth from "../pages/Auth/index.jsx";
+import ProtectedRoute from "./ProtectedRoute";
+import Dashboard from "../pages/Dashboard/Dashboard.jsx";
+import AdminDashboard from "../pages/Dashboard/AdminDashboard.jsx";
 
 export default function AppRouter() {
   return (
@@ -30,12 +33,15 @@ export default function AppRouter() {
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/product/:id" element={<ProductDetail />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/checkout" element={<Checkout />} />
+          <Route path="/cart" element={<Cart />} />         
           <Route path="/ordersuccess" element={<OrderSuccess />} />
-          <Route path="/orderhistory" element={<OrderHistory />} />
-          <Route path="/myaccount" element={<MyAccount />} />
           <Route path="/auth/*" element={<Auth />} />
+          <Route path="/checkout" element={<ProtectedRoute> <Checkout /> </ProtectedRoute> } />
+          <Route path="/myaccount" element={<ProtectedRoute> <MyAccount /> </ProtectedRoute>} />          
+          <Route path="/orderhistory" element={<ProtectedRoute> <OrderHistory /> </ProtectedRoute>} />
+          <Route path="/dashboard" element={<ProtectedRoute> <Dashboard /></ProtectedRoute> } />
+          <Route path="/dashboard/admin" element={<ProtectedRoute> <AdminDashboard /></ProtectedRoute> }/>
+
         </Routes>
       </main>
       <Footer />
