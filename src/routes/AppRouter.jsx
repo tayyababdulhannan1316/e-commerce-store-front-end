@@ -1,5 +1,6 @@
 // src/routes/AppRouter.jsx
-import React from "react";
+import React , {useContext} from "react";
+import { AuthContext } from "../contexts/AuthContext";
 import { Routes, Route } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -20,8 +21,11 @@ import Auth from "../pages/Auth/index.jsx";
 import ProtectedRoute from "./ProtectedRoute";
 import Dashboard from "../pages/Dashboard/Dashboard.jsx";
 import AdminDashboard from "../pages/Dashboard/AdminDashboard.jsx";
+import UserDashboard from "../pages/Dashboard/UserDashboard.jsx";
+import DashboardLayout from "../components/DashboardLayout.jsx";
 
 export default function AppRouter() {
+  const { user } = useContext(AuthContext);
   return (
     <>
       <Header />
@@ -41,6 +45,9 @@ export default function AppRouter() {
           <Route path="/orderhistory" element={<ProtectedRoute> <OrderHistory /> </ProtectedRoute>} />
           <Route path="/dashboard" element={<ProtectedRoute> <Dashboard /></ProtectedRoute> } />
           <Route path="/dashboard/admin" element={<ProtectedRoute> <AdminDashboard /></ProtectedRoute> }/>
+          <Route path="/dashboard/*" element={<ProtectedRoute><DashboardLayout /></ProtectedRoute> }/>
+          <Route path="/dashboard" element={<ProtectedRoute>
+          {user?.role === "admin" ? <AdminDashboard /> : <UserDashboard />} </ProtectedRoute> }/>
 
         </Routes>
       </main>
