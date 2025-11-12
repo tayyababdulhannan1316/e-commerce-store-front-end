@@ -49,7 +49,7 @@ export default function DashboardLayout() {
 
             {/* Common pages */}
             <Link
-              to="/dashboard/profile"
+              to="/dashboard/UserProfile"
               className="px-4 py-2 rounded-lg hover:bg-blue-100 hover:text-blue-700 transition"
             >
               Profile

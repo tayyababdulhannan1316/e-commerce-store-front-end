@@ -41,7 +41,7 @@ export default function MyAccount() {
 
             <div className="flex flex-col space-y-3 mt-6">
               <Link
-                to="/orderhistory"
+                to="/dashboard/orders"
                 className="bg-blue-600 text-white text-center py-2 rounded-lg font-medium hover:bg-blue-700 transition"
               >
                 View Order History

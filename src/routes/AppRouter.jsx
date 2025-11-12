@@ -16,7 +16,6 @@ import ProductDetail from "../pages/Frontend/ProductDetail";
 import Cart from "../pages/Frontend/Cart";
 import Checkout from "../pages/Frontend/Checkout";
 import OrderSuccess from "../pages/Frontend/OrderSuccess";
-import OrderHistory from "../pages/Frontend/OrderHistory";
 import MyAccount from "../pages/Frontend/MyAccount";
 import Auth from "../pages/Auth";
 import DashboardLayout from "../components/DashboardLayout";
@@ -25,6 +24,8 @@ import DashboardLayout from "../components/DashboardLayout";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import AdminDashboard from "../pages/Dashboard/AdminDashboard";
 import UserDashboard from "../pages/Dashboard/UserDashboard";
+import Orders from "../pages/Dashboard/Orders";
+import UserProfile from "../pages/Dashboard/UserProfile";
 
 export default function AppRouter() {
   const { user } = useContext(AuthContext);
@@ -61,15 +62,7 @@ export default function AppRouter() {
                 <MyAccount />
               </ProtectedRoute>
             }
-          />
-          <Route
-            path="/orderhistory"
-            element={
-              <ProtectedRoute>
-                <OrderHistory />
-              </ProtectedRoute>
-            }
-          />
+          />         
 
           {/* Dashboard Routes */}
           <Route
@@ -92,6 +85,12 @@ export default function AppRouter() {
               }
             />
             <Route path="user" element={<UserDashboard />} />
+            <Route
+                path="/dashboard/orders"
+                element={<ProtectedRoute><Orders /></ProtectedRoute>}
+              />
+              <Route path="UserProfile" element={<UserProfile />} />
+
           </Route>
         </Routes>
       </main>

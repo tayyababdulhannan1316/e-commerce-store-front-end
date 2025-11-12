@@ -13,7 +13,7 @@ function Hero() {
         backgroundImage: `url(${heroimage})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
-        backgroundAttachment: 'fixed',
+        // backgroundAttachment: 'fixed',
       }}
     >
       {/* Optional overlay (dark gradient for text contrast) */}

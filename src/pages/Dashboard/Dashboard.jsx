@@ -20,7 +20,7 @@ export default function Dashboard() {
             to="/dashboard/orders"
             className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-center"
           >
-            View My Orders
+            View My Past Orders
           </Link>
 
           {user?.role === "admin" && (

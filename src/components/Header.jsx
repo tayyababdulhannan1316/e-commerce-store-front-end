@@ -39,7 +39,7 @@ export default function Header() {
             <Link to="/categories" className="hover:text-blue-600">
               Categories
             </Link>
-            <Link to="/orderhistory" className="hover:text-blue-600">
+            <Link to="/dashboard/orders" className="hover:text-blue-600">
               Orders
             </Link>
             <Link to="/about" className="hover:text-blue-600">
@@ -143,7 +143,7 @@ export default function Header() {
               <Link to="/categories" className="hover:text-blue-600">
                 Categories
               </Link>
-              <Link to="/orderhistory" className="hover:text-blue-600">
+              <Link to="/dashboard/orders" className="hover:text-blue-600">
                 Orders
               </Link>
               <Link to="/about" className="hover:text-blue-600">

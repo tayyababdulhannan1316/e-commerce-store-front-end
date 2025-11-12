@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { jsPDF } from "jspdf";
 
-export default function OrderHistory() {
+export default function Orders() {
   const [orders, setOrders] = useState([]);
 
   // ✅ Load orders from localStorage
