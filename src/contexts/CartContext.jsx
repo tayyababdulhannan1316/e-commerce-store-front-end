@@ -11,10 +11,14 @@ export const CartProvider = ({ children }) => {
     return saved ? JSON.parse(saved) : [];
   });
 
-  const [orders, setOrders] = useState(() => {
-    const saved = localStorage.getItem("orders");
-    return saved ? JSON.parse(saved) : [];
-  });
+ const [orders, setOrders] = useState([]);
+
+// ✅ Load orders on startup (THIS WAS MISSING)
+useEffect(() => {
+  const savedOrders = JSON.parse(localStorage.getItem("orders")) || [];
+  setOrders(savedOrders);
+}, []);
+
 
   // ✅ Persist cart to localStorage
   useEffect(() => {
