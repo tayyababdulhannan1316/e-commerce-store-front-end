@@ -1,5 +1,5 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
-import { useAuth } from "./AuthContext"; // ✅ Import auth context to link user
+import { useAuth } from "./AuthContext"; 
 
 const CartContext = createContext();
 export const useCart = () => useContext(CartContext);
@@ -13,7 +13,7 @@ export const CartProvider = ({ children }) => {
 
  const [orders, setOrders] = useState([]);
 
-// ✅ Load orders on startup (THIS WAS MISSING)
+
 useEffect(() => {
   const savedOrders = JSON.parse(localStorage.getItem("orders")) || [];
   setOrders(savedOrders);
@@ -76,39 +76,40 @@ useEffect(() => {
     localStorage.removeItem("cartItems");
   };
 
-  // ✅ Add new order (called from Checkout)
   const addOrder = (form, subtotal, cartItems) => {
-    const newOrder = {
-      id: Date.now(),
-      date: new Date().toISOString(),
-      userId: user?.id || null,
-      userEmail: user?.email || form.email, // fallback if guest
-      customer: {
-        name: form.name,
-        email: form.email,
-        phone: form.phone,
-        address: form.address,
-      },
-      items: cartItems.map((item) => ({
-        id: item.id,
-        name: item.name,
-        price: item.price,
-        quantity: item.quantity,
-      })),
-      total: subtotal,
-      status: "Processing",
-    };
+  const newOrder = {
+    id: Date.now(),
+    date: new Date().toISOString(),
+    userId: user?.id || null,
+    userEmail: user?.email || form.email,
 
-    // ✅ Add to state & localStorage instantly
-    setOrders((prev) => {
-      const updated = [...prev, newOrder];
-      localStorage.setItem("orders", JSON.stringify(updated));
-      return updated;
-    });
+    customer: {
+      name: form.name,
+      email: form.email,
+      phone: form.phone,
+      address: form.address,
+    },
 
-    // ✅ Clear cart after successful order
-    clearCart();
+    items: cartItems.map((item) => ({
+      id: item.id,
+      name: item.name || item.title || "Product",
+      price: item.price,
+      quantity: item.quantity,
+    })),
+
+    total: subtotal,
+    status: "Processing",
   };
+
+  setOrders((prev) => {
+    const updated = [...prev, newOrder];
+    localStorage.setItem("orders", JSON.stringify(updated));
+    return updated;
+  });
+
+  clearCart();
+};
+
 
   // ✅ Totals
   const totalItems = cartItems.reduce((acc, item) => acc + item.quantity, 0);

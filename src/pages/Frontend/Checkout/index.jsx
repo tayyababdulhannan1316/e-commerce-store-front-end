@@ -35,15 +35,8 @@ export default function Checkout() {
     }
 
     // ✅ Attach logged-in user info to the order
-    addOrder(
-      {
-        ...form,
-        userId: user.id,
-        userEmail: user.email,
-      },
-      subtotal,
-      cartItems
-    );
+   addOrder(form, subtotal, cartItems);
+
 
     message.success("Order placed successfully!");
     navigate("/ordersuccess");

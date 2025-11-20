@@ -12,7 +12,7 @@ export default function DashboardLayout() {
   return (
     <div className="flex min-h-screen bg-gray-100">
       {/* Sidebar */}
-      <aside className="w-64 bg-white shadow-md flex-shrink-0">
+      <aside className="w-64 bg-white shadow-md shrink-0">
         <div className="p-6">
           <h2 className="text-2xl font-bold text-gray-800 mb-8">
             Dashboard
