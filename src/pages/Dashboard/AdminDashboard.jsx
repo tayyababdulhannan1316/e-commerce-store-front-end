@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useCart } from "../../contexts/CartContext";
 
 export default function AdminDashboard() {
@@ -8,10 +8,73 @@ export default function AdminDashboard() {
   const [statusFilter, setStatusFilter] = useState("All");
   const [sortBy, setSortBy] = useState("Newest");
 
+  // ✅ Sync orders from localStorage periodically to catch new user orders
+  useEffect(() => {
+    const refreshOrders = () => {
+      try {
+        const savedOrdersStr = localStorage.getItem("orders");
+        const savedOrders = savedOrdersStr ? JSON.parse(savedOrdersStr) : [];
+        
+        // Use functional update to avoid dependency on orders
+        setOrders((currentOrders) => {
+          // Always update on first load (when currentOrders is empty or different)
+          if (!currentOrders || currentOrders.length === 0) {
+            return savedOrders;
+          }
+          
+          // Only update if there are actually new orders (by comparing length or IDs)
+          if (savedOrders.length !== currentOrders.length) {
+            return savedOrders;
+          } else {
+            // Check if any order IDs are different (new orders added)
+            const savedOrderIds = new Set(savedOrders.map(o => o.id));
+            const currentOrderIds = new Set(currentOrders.map(o => o.id));
+            if (savedOrderIds.size !== currentOrderIds.size || 
+                [...savedOrderIds].some(id => !currentOrderIds.has(id))) {
+              return savedOrders;
+            }
+          }
+          return currentOrders; // No changes, return current state
+        });
+      } catch (error) {
+        console.error("Error refreshing orders:", error);
+      }
+    };
+
+    // Refresh immediately on mount - this ensures all orders are loaded
+    refreshOrders();
+
+    // Set up interval to check for new orders every 2 seconds
+    const interval = setInterval(refreshOrders, 2000);
+
+    // Listen for storage events (when localStorage changes in other tabs/windows)
+    const handleStorageChange = (e) => {
+      if (e.key === "orders") {
+        refreshOrders();
+      }
+    };
+    window.addEventListener("storage", handleStorageChange);
+
+    // Listen for custom events (when orders are updated in same tab)
+    const handleOrdersUpdated = () => {
+      refreshOrders();
+    };
+    window.addEventListener("ordersUpdated", handleOrdersUpdated);
+
+    // Cleanup
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener("storage", handleStorageChange);
+      window.removeEventListener("ordersUpdated", handleOrdersUpdated);
+    };
+  }, [setOrders]); // Only depend on setOrders which is stable
+
   const saveOrders = (updated) => {
     setOrders(updated);
     localStorage.setItem("orders", JSON.stringify(updated));
     localStorage.setItem("ordersLastUpdated", new Date().toISOString());
+    // ✅ Dispatch custom event to notify other components of order updates
+    window.dispatchEvent(new CustomEvent("ordersUpdated", { detail: updated }));
   };
 
   const updateStatus = (id, newStatus) => {
@@ -62,12 +125,45 @@ export default function AdminDashboard() {
     <div className="min-h-screen bg-gray-100 p-8">
       <div className="max-w-6xl mx-auto bg-white rounded-2xl shadow-lg p-8">
 
-        <h2 className="text-2xl font-bold mb-6 text-gray-800 flex justify-between">
-          Admin Dashboard
-          <span className="text-sm text-gray-500">
-            {lastUpdated && "Last updated: " + new Date(lastUpdated).toLocaleString()}
-          </span>
-        </h2>
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-2xl font-bold text-gray-800">Admin Dashboard</h2>
+          <div className="flex items-center gap-4">
+            <button
+              onClick={() => {
+                try {
+                  const savedOrdersStr = localStorage.getItem("orders");
+                  const savedOrders = savedOrdersStr ? JSON.parse(savedOrdersStr) : [];
+                  setOrders(savedOrders);
+                  localStorage.setItem("ordersLastUpdated", new Date().toISOString());
+                  alert(`Refreshed! Found ${savedOrders.length} orders in localStorage. Current state: ${orders.length} orders.`);
+                } catch (error) {
+                  console.error("Error refreshing orders:", error);
+                  alert("Error refreshing orders. Please check console.");
+                }
+              }}
+              className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium"
+            >
+              🔄 Refresh Orders
+            </button>
+            <span className="text-sm text-gray-500">
+              {lastUpdated && "Last updated: " + new Date(lastUpdated).toLocaleString()}
+            </span>
+          </div>
+        </div>
+
+        {/* Debug Info - Remove this in production */}
+        <div className="mb-4 p-3 bg-yellow-50 border border-yellow-200 rounded text-sm">
+          <strong>Debug Info:</strong> Showing {orders.length} orders in state. 
+          {(() => {
+            try {
+              const savedOrdersStr = localStorage.getItem("orders");
+              const savedOrders = savedOrdersStr ? JSON.parse(savedOrdersStr) : [];
+              return ` localStorage has ${savedOrders.length} orders.`;
+            } catch {
+              return " Error reading localStorage.";
+            }
+          })()}
+        </div>
 
         {/* STATS */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
@@ -139,7 +235,16 @@ export default function AdminDashboard() {
               </tr>
             </thead>
             <tbody>
-              {filteredOrders.map((order) => (
+              {filteredOrders.length === 0 ? (
+                <tr>
+                  <td colSpan="5" className="py-8 text-center text-gray-500">
+                    {orders.length === 0 
+                      ? "No orders found. Orders placed by users will appear here." 
+                      : "No orders match your filters."}
+                  </td>
+                </tr>
+              ) : (
+                filteredOrders.map((order) => (
                 <React.Fragment key={order.id}>
                   <tr
                     onClick={() => toggleDetails(order.id)}
@@ -236,7 +341,8 @@ export default function AdminDashboard() {
                     </tr>
                   )}
                 </React.Fragment>
-              ))}
+                ))
+              )}
             </tbody>
           </table>
         </div>

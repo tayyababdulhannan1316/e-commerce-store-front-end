@@ -3,11 +3,35 @@ import React, { createContext, useState, useEffect,useContext } from "react";
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  // ✅ Initialize user from localStorage immediately to prevent logout on refresh
+  const [user, setUser] = useState(() => {
+    try {
+      const savedUser = localStorage.getItem("authUser");
+      if (savedUser) {
+        return JSON.parse(savedUser);
+      }
+    } catch (error) {
+      console.error("Error loading user from localStorage:", error);
+      localStorage.removeItem("authUser"); // Clear invalid data
+    }
+    return null;
+  });
 
+  // ✅ Also sync on mount to handle cases where localStorage is updated externally
   useEffect(() => {
-    const savedUser = JSON.parse(localStorage.getItem("authUser"));
-    if (savedUser) setUser(savedUser);
+    try {
+      const savedUser = localStorage.getItem("authUser");
+      if (savedUser) {
+        const parsedUser = JSON.parse(savedUser);
+        setUser(parsedUser);
+      } else {
+        setUser(null);
+      }
+    } catch (error) {
+      console.error("Error loading user from localStorage:", error);
+      localStorage.removeItem("authUser");
+      setUser(null);
+    }
   }, []);
 
   const login = (email, password) => {
