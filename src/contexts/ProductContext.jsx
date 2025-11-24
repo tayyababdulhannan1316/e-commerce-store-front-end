@@ -2,16 +2,14 @@ import React, { createContext, useState, useEffect } from "react";
 
 export const ProductContext = createContext();
 
-export default function ProductProvider({ children }) {
+export function ProductProvider({ children }) {   // <-- changed! (named export)
   const [products, setProducts] = useState([]);
 
-  // Load products on app start
   useEffect(() => {
     const saved = localStorage.getItem("products");
     if (saved) setProducts(JSON.parse(saved));
   }, []);
 
-  // Save to localStorage
   const saveProducts = (updated) => {
     setProducts(updated);
     localStorage.setItem("products", JSON.stringify(updated));
@@ -23,3 +21,4 @@ export default function ProductProvider({ children }) {
     </ProductContext.Provider>
   );
 }
+
