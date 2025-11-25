@@ -26,6 +26,7 @@ import AdminDashboard from "../pages/Dashboard/AdminDashboard";
 import UserDashboard from "../pages/Dashboard/UserDashboard";
 import Orders from "../pages/Dashboard/Orders";
 import UserProfile from "../pages/Dashboard/UserProfile";
+import ProductManagement from "../pages/Dashboard/ProductManagement";
 
 export default function AppRouter() {
   const { user } = useContext(AuthContext);
@@ -85,6 +86,7 @@ export default function AppRouter() {
               }
             />
             <Route path="user" element={<UserDashboard />} />
+            <Route path="products" element={<ProductManagement />} />
             <Route path="orders" element={<Orders />} />
             <Route path="UserProfile" element={<UserProfile />} />
           </Route>

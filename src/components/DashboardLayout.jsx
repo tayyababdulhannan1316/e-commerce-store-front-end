@@ -54,6 +54,12 @@ export default function DashboardLayout() {
             >
               Profile
             </Link>
+            <Link
+              to="/dashboard/products"
+              className="px-4 py-2 rounded-lg hover:bg-blue-100 hover:text-blue-700 transition"
+            >
+              Product Management
+            </Link>
 
             <button
               onClick={handleLogout}
