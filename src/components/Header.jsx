@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ShoppingCart, User, Search } from "lucide-react";
+import { ShoppingCart, User, Search, Heart } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "../contexts/CartContext";
 import { useAuth } from "../contexts/AuthContext";
@@ -47,6 +47,9 @@ export default function Header() {
             </Link>
             <Link to="/contact" className="hover:text-blue-600">
               Contact
+            </Link>
+            <Link to="/faq" className="hover:text-blue-600">
+              FAQ
             </Link>
 
             {/* ✅ Auth Buttons */}
@@ -101,6 +104,9 @@ export default function Header() {
 
           {/* Cart + User Icon (closer to search bar) */}
           <div className="flex items-center space-x-5 md:ml-2">
+            <Link to="/wishlist">
+              <Heart className="text-gray-300 hover:text-blue-500 cursor-pointer" size={22} />
+            </Link>
             <Link to="/cart" className="relative">
               <ShoppingCart
                 className="text-gray-300 hover:text-blue-500"
@@ -151,6 +157,12 @@ export default function Header() {
               </Link>
               <Link to="/contact" className="hover:text-blue-600">
                 Contact
+              </Link>
+              <Link to="/faq" className="hover:text-blue-600">
+                FAQ
+              </Link>
+              <Link to="/wishlist" className="hover:text-blue-600">
+                Wishlist
               </Link>
               <Link to="/cart" className="hover:text-blue-600">
                 Cart

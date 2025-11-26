@@ -17,6 +17,9 @@ import Cart from "../pages/Frontend/Cart";
 import Checkout from "../pages/Frontend/Checkout";
 import OrderSuccess from "../pages/Frontend/OrderSuccess";
 import MyAccount from "../pages/Frontend/MyAccount";
+import Wishlist from "../pages/Frontend/Wishlist/Wishlist";
+import FAQ from "../pages/Frontend/FAQ/FAQ";
+import NotFound from "../pages/Frontend/NotFound/NotFound";
 import Auth from "../pages/Auth";
 import DashboardLayout from "../components/DashboardLayout";
 
@@ -45,6 +48,8 @@ export default function AppRouter() {
           <Route path="/product/:id" element={<ProductDetail />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/ordersuccess" element={<OrderSuccess />} />
+          <Route path="/wishlist" element={<Wishlist />} />
+          <Route path="/faq" element={<FAQ />} />
           <Route path="/auth/*" element={<Auth />} />
 
           {/* Protected Frontend Routes */}
@@ -90,6 +95,9 @@ export default function AppRouter() {
             <Route path="orders" element={<Orders />} />
             <Route path="UserProfile" element={<UserProfile />} />
           </Route>
+
+          {/* 404 Not Found */}
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
       <Footer />
