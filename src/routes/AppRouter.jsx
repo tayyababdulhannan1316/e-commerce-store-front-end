@@ -20,6 +20,10 @@ import MyAccount from "../pages/Frontend/MyAccount";
 import Wishlist from "../pages/Frontend/Wishlist/Wishlist";
 import FAQ from "../pages/Frontend/FAQ/FAQ";
 import NotFound from "../pages/Frontend/NotFound/NotFound";
+import SearchResults from "../pages/Frontend/SearchResults";
+import ShippingPolicy from "../pages/Frontend/Policies/ShippingPolicy";
+import ReturnPolicy from "../pages/Frontend/Policies/ReturnPolicy";
+import TermsOfService from "../pages/Frontend/Policies/TermsOfService";
 import Auth from "../pages/Auth";
 import DashboardLayout from "../components/DashboardLayout";
 
@@ -50,6 +54,10 @@ export default function AppRouter() {
           <Route path="/ordersuccess" element={<OrderSuccess />} />
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/faq" element={<FAQ />} />
+          <Route path="/search" element={<SearchResults />} />
+          <Route path="/shipping-policy" element={<ShippingPolicy />} />
+          <Route path="/return-policy" element={<ReturnPolicy />} />
+          <Route path="/terms-of-service" element={<TermsOfService />} />
           <Route path="/auth/*" element={<Auth />} />
 
           {/* Protected Frontend Routes */}

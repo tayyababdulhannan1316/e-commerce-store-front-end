@@ -50,7 +50,7 @@ function About() {
       </section>
 
       {/* Mission Section */}
-      <section className="bg-blue-600 text-white py-16 px-6 md:px-16 text-center">
+      <section className="bg-gray-700 text-gray-300 shadow-md sticky text-center">
         <h2 className="text-3xl font-bold mb-4">Our Mission</h2>
         <p className="max-w-2xl mx-auto text-gray-100 text-lg leading-relaxed">
           To empower every individual to express their style and make confident choices

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 export default function Footer() {
   return (
     <footer className="bg-gray-900 text-gray-300 pt-12 pb-6">
@@ -28,10 +28,10 @@ export default function Footer() {
         <div>
           <h3 className="text-lg font-semibold text-white mb-4">Support</h3>
           <ul className="space-y-2 text-sm">
-            <li><a href="#" className="hover:text-blue-400">FAQs</a></li>
-            <li><a href="#" className="hover:text-blue-400">Shipping Policy</a></li>
-            <li><a href="#" className="hover:text-blue-400">Return Policy</a></li>
-            <li><a href="#" className="hover:text-blue-400">Terms of Service</a></li>
+            <li><Link to="/faq" className="hover:text-blue-400">FAQs</Link></li>
+            <li><Link to="/shipping-policy" className="hover:text-blue-400">Shipping Policy</Link></li>
+            <li><Link to="/return-policy" className="hover:text-blue-400">Return Policy</Link></li>
+            <li><Link to="/terms-of-service" className="hover:text-blue-400">Terms of Service</Link></li>
           </ul>
         </div>
 

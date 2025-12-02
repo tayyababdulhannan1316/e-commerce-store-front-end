@@ -9,7 +9,7 @@ export default function Dashboard() {
     <div className="min-h-screen bg-gray-100 py-10">
       <div className="max-w-3xl mx-auto bg-white shadow-lg rounded-2xl p-8">
         <h2 className="text-2xl font-bold mb-4">
-          Welcome, {user?.name || "User"} 👋
+          Welcome, {user?.name || "User"} 
         </h2>
         <p className="text-gray-600 mb-6">
           You are logged in as <span className="font-medium">{user?.role}</span>.

@@ -6,6 +6,7 @@ import { useAuth } from "../contexts/AuthContext";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const { totalItems } = useCart();
   const { user, logout } = useAuth();
   const navigate = useNavigate();
@@ -13,6 +14,14 @@ export default function Header() {
   const handleLogout = () => {
     logout();
     navigate("/auth/login");
+  };
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`/search?q=${encodeURIComponent(searchQuery)}`);
+      setIsMenuOpen(false); // Close mobile menu if open
+    }
   };
 
   return (
@@ -48,9 +57,9 @@ export default function Header() {
             <Link to="/contact" className="hover:text-blue-600">
               Contact
             </Link>
-            <Link to="/faq" className="hover:text-blue-600">
+            {/* <Link to="/faq" className="hover:text-blue-600">
               FAQ
-            </Link>
+            </Link> */}
 
             {/* ✅ Auth Buttons */}
             {user ? (
@@ -93,14 +102,16 @@ export default function Header() {
         {/* ✅ Second Row: Search + Cart + Account (closer together) */}
         <div className="flex justify-stretch items-center mt-5 flex-wrap gap-3">
           {/* Search Bar */}
-          <div className="flex items-center bg-gray-100 rounded-full px-3 py-1 w-full md:w-2/3">
+          <form onSubmit={handleSearch} className="flex items-center bg-gray-100 rounded-full px-3 py-1 w-full md:w-2/3">
             <Search className="text-gray-500" size={30} />
             <input
               type="text"
               placeholder="Search for products..."
               className="bg-transparent outline-none text-sm ml-2 w-full text-gray-800"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
             />
-          </div>
+          </form>
 
           {/* Cart + User Icon (closer to search bar) */}
           <div className="flex items-center space-x-5 md:ml-2">
@@ -130,14 +141,16 @@ export default function Header() {
       {isMenuOpen && (
         <div className="md:hidden bg-white border-t border-gray-200 shadow-md">
           <div className="p-4">
-            <div className="flex items-center bg-gray-100 rounded-full px-3 py-1 mb-4">
+            <form onSubmit={handleSearch} className="flex items-center bg-gray-100 rounded-full px-3 py-1 mb-4">
               <Search className="text-gray-500" size={18} />
               <input
                 type="text"
                 placeholder="Search products..."
                 className="bg-transparent outline-none text-sm ml-2 w-full"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
               />
-            </div>
+            </form>
 
             <nav className="flex flex-col space-y-2 text-gray-700 font-medium">
               <Link to="/" className="hover:text-blue-600">
@@ -158,9 +171,9 @@ export default function Header() {
               <Link to="/contact" className="hover:text-blue-600">
                 Contact
               </Link>
-              <Link to="/faq" className="hover:text-blue-600">
-                FAQ
-              </Link>
+              // <Link to="/faq" className="hover:text-blue-600">
+              //   FAQ
+              // </Link>
               <Link to="/wishlist" className="hover:text-blue-600">
                 Wishlist
               </Link>
